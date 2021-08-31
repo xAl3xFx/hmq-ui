@@ -11,6 +11,7 @@
 	import ToastComponent from "./components/ToastComponent.svelte";
 	import './resources/bootstrap-5.1.0-dist/bootstrap-5.1.0-dist/css/bootstrap.min.css';
 	import './resources/fontawesome-free-5.15.4-web/css/all.min.css';
+	import Messages from "./pages/Messages.svelte";
 
 	export let url: string;
 	url="";
@@ -42,6 +43,7 @@
 		<Router url="{url}">
 			<div style="height: 100%">
 				<Route path="/login" component="{Login}" />
+				<Route path="/messages" component="{Messages}" />
 				<!--for now the router just support case sensitive,
 					one workaround colud be add two time the route
 					Example.

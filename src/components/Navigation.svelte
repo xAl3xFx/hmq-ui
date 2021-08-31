@@ -5,6 +5,8 @@
     // import Toast from './Toast.svelte'
     import {afterUpdate, getContext} from "svelte";
 
+    let currentPage = 'home';
+
     const logout = () => {
         axios.post("authentication/logout").then(response =>{
             if(response.status === 200){
@@ -19,18 +21,8 @@
         });
     }
 
-    afterUpdate(() => {
-        const page = location.href.split('/')[location.href.split('/').length - 1];
-        switch (page){
-            case '' :
-            case '#':
-            {
-                if(document.getElementById("homeLink"))
-                    document.getElementById("homeLink").style.fontWeight = "bold";
-                break;
-            }
-        }
-    })
+    const setCurrentPage = value => currentPage = value;
+
 </script>
 <!--<head>-->
 <!--    <link-->
@@ -41,23 +33,17 @@
 
 {#if $user.loggedIn}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">HandleMyQueue</a>
+        <a class="navbar-brand" href="/">HandleMyQueue</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="loggedNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a id="homeLink" class="nav-link" href="#">Home</a>
+                    <a id="homeLink" on:click={() => setCurrentPage('home')} class={`nav-link ${currentPage === 'home' ? 'fw-bold' : ''}`} use:link href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a id="featuresLink" class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                <li class="nav-item active">
+                    <a id="messagesLink" on:click={() => setCurrentPage('messages')} class={`nav-link ${currentPage === 'messages' ? 'fw-bold' : ''}`} use:link href="/messages">Messages</a>
                 </li>
             </ul>
         </div>
